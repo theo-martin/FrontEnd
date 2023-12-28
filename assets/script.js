@@ -12,7 +12,7 @@ fetchWorks().then(list => {
     const sectionGallery = document.querySelector(".gallery");
     for (let i=0; i < list.length; i++) {
         const work = list[i];
-        // Creating elements in the DOM
+        // Crée les elements
         const workElement = document.createElement("figure");
         workElement.dataset.category = work.category.name; //ajoute la categorie 
         workElement.dataset.id = work.id; //ajoute l'id correspondant 

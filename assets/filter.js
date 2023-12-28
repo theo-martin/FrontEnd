@@ -1,13 +1,14 @@
-const sectionPortfolio = document.getElementById("portfolio")
-const divGallery = document.querySelector(".gallery")
 
-const divFilters = document.createElement("div")
-divFilters.classList.add("filters")
+const sectionPortfolio = document.getElementById("portfolio") //selection id portfolio
+const divGallery = document.querySelector(".gallery") // selectionne la class gallery
 
-const filterTous = document.createElement("a")
-filterTous.classList.add("filter-active", "filter")
-filterTous.innerText = "Tous"
-divFilters.appendChild(filterTous)
+const divFilters = document.createElement("div")//crée la balise div
+divFilters.classList.add("filters")//ajoute la classe "filters" à divFilters
+
+const filterTous = document.createElement("a") //crée la balise "a" avec nom de constante filtertous
+filterTous.classList.add("filter-active", "filter")//ajoute la classe "filter" "filter-active"
+filterTous.innerText = "Tous" //inscrit le texte "tous" dans filtertous
+divFilters.appendChild(filterTous)//associe filtertous à divfilter
 
 fetch("http://localhost:5678/api/categories").then(res => {
     return res.json()
@@ -19,7 +20,6 @@ fetch("http://localhost:5678/api/categories").then(res => {
         filterElement.innerText = category.name
         filterElement.classList.add("filter")
         filterElement.setAttribute("data-id",categoryid)
-
         divFilters.appendChild(filterElement)
         sectionPortfolio.insertBefore(divFilters, divGallery)
     })
@@ -41,26 +41,3 @@ fetch("http://localhost:5678/api/categories").then(res => {
         })
     })
 })
-// async function fetchCategories() {
-//     const reponse = await fetch("http://localhost:5678/api/categories");
-//     let listcategory = await reponse.json();
-  
-//     console.log(listcategory);
-  
-//     return listcategory;
-//   }
-//   fetchCategories().then(listcategory => {
-//     const sectionGallery = document.querySelector("portfolio");
-//     for (let i=0; i < listcategory.length; i++) {
-//         const category = listcategory[i];
-//         const categoryname = category.name
-//         const categoryid = category.id
-//         const CategoryElement = document.createElement(categoryname);
-        
-//         // const 
-//         console.log("listecategory=",listcategory );
-//         console.log("id=",category.id );
-//         console.log("name=",category.name );
-       
-//     }
-//   })
