@@ -1,49 +1,49 @@
 
 const form = document.querySelector('form')
+const sectionLogin = document.querySelector("#login")
 
-form.addEventListener("submit",(event)=>{
+form.addEventListener("submit",async (event)=>{
     event.preventDefault();
-    const baliseEmail = document.getElementById(email);
-    const valeurEmail = baliseEmail.value;
-    const baliseMdp = document.getElementById(password);
-    const valeurMdp = baliseMdp.value;
-      // Vérification que les champs ne sont pas vides
-      if (valeurEmail.trim() === "" || valeurMdp.trim() === "") {
-        alert("Veuillez remplir tous les champs.");
-        return false;
-    } 
-      const userBodyValue = {
-        email: "sophie.bluel@test.tld",
-        password: "S0phie"
-      };
-      const response = await fetch("http://localhost:5678/api/users/login", {
-      
+    const userLogin = {
+        email: event.target.querySelector("[name=email]").value.trim,
+        password: event.target.querySelector("[name=password]").value.trim,
+    }
+    const userBodyValue = JSON.stringify(userLogin)
+    fetch("http://localhost:5678/api/users/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: userBodyValue
-      });
-      
-      if (response.status === 200) {
+        body: userBodyValue,
+      })
+      .then(res => {
+      if (res.status === 200) {
+        
+          return res.json()
+      }
         // La connexion a réussi
-      } else {
+       else {
         throw new Error("la connexion à échoué veuillez verifier l'identifiant ou le mots de passe");
         // La connexion a échoué
       }
-   
-}).then(data => {
+    })
+    .then(data => {
     console.log(data.token)
     localStorage.setItem("token", data.token)
     location.href="../../index.html"
-})
-.catch(error => {
-    messageErreur(Error.message)
-})
-function messageErreur(message){
-    const divError = document.createElement("div")
-    divError.classList.add("erreur")
-    const messageErrorElement = document.createElement("p")
-
+    })
+    .catch(error => {
+    messageErreur(error.message)
+   })
    
+})
+
+function messageErreur(message){
+    const divErreur = document.createElement("div")
+    divErreur.classList.add("erreur")
+    const messageErreurElement = document.createElement("p")
+    messageErreurElement.innerText = message
+   
+    divErreur.appendChild(messageErreurElement)
+    sectionLogin.insertBefore(divErreur, form)
 }
 
 
