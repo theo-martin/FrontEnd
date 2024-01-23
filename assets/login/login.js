@@ -1,9 +1,9 @@
 
-const form = document.querySelector('form')
+const form = document.querySelector('#login form')
 const sectionLogin = document.querySelector("#login")
 
-form.addEventListener("submit",async (event)=>{
-    event.preventDefault();
+form.addEventListener("submit", async (event)=>{
+    event.preventDefault()
     const userLogin = {
         email: event.target.querySelector("[name=email]").value.trim,
         password: event.target.querySelector("[name=password]").value.trim,
@@ -11,7 +11,10 @@ form.addEventListener("submit",async (event)=>{
     const userBodyValue = JSON.stringify(userLogin)
     fetch("http://localhost:5678/api/users/login", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json",
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST',
+        'Access-Control-Allow-Headers': 'Content-Type' },
         body: userBodyValue,
       })
       .then(res => {
@@ -21,7 +24,7 @@ form.addEventListener("submit",async (event)=>{
       }
         // La connexion a réussi
        else {
-        throw new Error("la connexion à échoué veuillez verifier l'identifiant ou le mots de passe");
+        throw new Error("la connexion à échoué veuillez verifier l'identifiant ou le mots de passe")
         // La connexion a échoué
       }
     })
