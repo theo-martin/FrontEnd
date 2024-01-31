@@ -55,7 +55,7 @@ form.addEventListener("submit", async (event)=>{
 
           displayLoginOk("Vous êtes connectés")
           removeLoginOk()
-          
+
           location.href="../../index.html"
       } else {
           displayLoginError("Erreur dans l’identifiant ou le mot de passe")
