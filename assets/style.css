@@ -133,15 +133,24 @@ table {
 /** end reset css**/
 body {
   background-color: #fffef8;
-  max-width: 1140px;
+  /* max-width: 1140px; */
   margin: auto;
   font-family: "Work Sans";
   font-size: 14px;
 }
 header {
+  max-width: 1140px;
   display: flex;
   justify-content: space-between;
-  margin: 50px 0;
+  margin: 50px auto 50px auto;
+  /* margin: 50px 0; */
+}
+main {
+  margin: 0 auto 0 auto;
+  max-width: 1140px;
+}
+footer {
+  margin: 0 auto 0 auto;
 }
 section {
   margin: 50px 0;
@@ -329,4 +338,26 @@ section#login {
 .login {
   font-weight: bold;
   color: black;
+}
+
+.modal {
+  align-items: center;
+  gap: 50px;
+  padding: 0 105px 100px 105px;
+  display: flex;
+  flex-direction: column-reverse;
+}
+.modal_closing_icon {
+}
+.modaldelete {
+  display: none;
+}
+.btn_add {
+  justify-content: space-around;
+  align-items: center;
+  height: 30px;
+  width: 150px;
+  display: flex;
+  color: white;
+  background-color: black;
 }
