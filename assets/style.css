@@ -343,7 +343,9 @@ section#login {
 .modal {
   align-items: center;
   gap: 50px;
+
   padding: 0 105px 100px 105px;
+
   display: flex;
   flex-direction: column-reverse;
 }
