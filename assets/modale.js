@@ -42,27 +42,30 @@ const createEditingButton = (id) => {
     <p>modifier</p>`;
 };
 const modalBox = document.createElement("dialog");
+const modal = document.createElement("div");
+modal.classList.add("modal");
 const button_add = document.createElement("button");
 button_add.classList.add("btn_add")
 button_add.innerHTML = `<p>ajouter une photo</p>`
 const modalContent = document.createElement("div");
 modalContent.classList.add("modal_content")  
 modalContent.setAttribute("style", "display: grid;grid-template-columns: repeat(5, 1fr);grid-auto-flow: row;column-gap: 6px;row-gap: 12px;")
-
 modalBox.classList.add("modaladding_active","modal","modaldelete");
 const headerModal = document.createElement("header");
 const h1Modal = document.createElement("h1");
 h1Modal.innerHTML= "Galerie photo";
+
 portfolioTITLE.appendChild(modalBox);
-modalBox.appendChild(button_add);
-modalBox.appendChild(modalContent);
-modalBox.appendChild(headerModal);
+modalBox.appendChild(modal);
+modal.appendChild(button_add);
+modal.appendChild(modalContent);
+modal.appendChild(headerModal);
 headerModal.appendChild(h1Modal);
 headerModal.appendChild(h1Modal);
 
 const close_icon = document.createElement("div");
 close_icon.innerHTML = `<i class="fa-solid fa-xmark"></i>`
-modalBox.appendChild(close_icon);
+modal.appendChild(close_icon);
  
 
 
@@ -92,8 +95,8 @@ function openModal() {
 editingButton.addEventListener("click", () => {
     
     openModal();
-    modalAdding.classList.replace("modaladding_active", "modaladding");
-    modalDelete.classList.replace("modaldelete_disabled", "modaldelete");
+    modalFormulaire.classList.add("modaldelete");
+    
 });
 
 function ModalClose() {
@@ -109,8 +112,7 @@ modalBox.addEventListener("click",  (e) => {
     }
 })
 close_icon.addEventListener("click", ModalClose );
-// closetrig1.addEventListener("click", ModalClose );
-// closetrig2.addEventListener("click", ModalClose );
+
 
 modalBox.addEventListener("click", (event) => {
     if(event.target === modalBox) {
@@ -118,35 +120,6 @@ modalBox.addEventListener("click", (event) => {
     };
 });
 
-// ouverture modal addingphoto
-function Gotomodaladding() {
-    // modalAdding.classList.replace("modaladding", "modaladding_active");
-    // modalDelete.classList.replace("modaldelete", "modaldelete_disabled");
-    ResFormAdding();
-};
-// addButton.addEventListener("click", Gotomodaladding );
-button_add.addEventListener("click", Gotomodaladding );
-// retour à la modalDelete
-function GoBackModalDelete() {
-    // modalAdding.classList.replace("modaladding_active", "modaladding");
-    // modalDelete.classList.replace("modaldelete_disabled", "modaldelete");
-    ResFormAdding();
-};
-
-previous_icon.addEventListener("click", GoBackModalDelete);
-
-// reset formulaire modaladding
-function ResFormAdding() {
-    Image_preview.src = "";
-    Image_upload.value = ""
-    titre.value = "";
-    valide_button.style.background = "#A7A7A7";
-    boxImage_preview.style.display = "none";
-    LabelUpload.style.visibility = "visible";
-    fa_image.style.visibility = "visible";
-    text_format.style.visibility = "visible";
-
-}
 
 // ajout des projets dans la modal
 // modalContent
@@ -198,53 +171,154 @@ function addingProjets() {
 }
 
 
-// Réalisation de la preview de l'image
-Image_upload.addEventListener('change', function () {
-    const file = this.files[0];
-    if (file){
-        const reader = new FileReader();
-        boxImage_preview.style.display = "flex";
+// partie 2
+const modalFormulaire = document.createElement("div")
+modalFormulaire.classList.add("modalformulaire")
 
-        reader.addEventListener("load", function() {
-            LabelUpload.style.visibility = "hidden";
-            fa_image.style.visibility = "hidden";
-            text_format.style.visibility = "hidden";
+const modalFormulaireBox = document.createElement("div")
+modalFormulaireBox.classList.add("modal-box")
 
-            Image_preview.setAttribute("src", this.result);
-           
-        });
-        reader.readAsDataURL(file);
-    }
-});
+const modalFormulaireHeader = document.createElement("div")
+modalFormulaireHeader.classList.add("modal-header")
+const crossFormulaire = document.createElement("i")
+crossFormulaire.classList.add("fa-solid", "fa-xmark", "fa-xl", "clickable")
+const retour = document.createElement("i")
+retour.classList.add("fa-solid", "fa-arrow-left", "fa-xl", "clickable")
+modalFormulaireHeader.appendChild(crossFormulaire)
+modalFormulaireHeader.appendChild(retour)
 
-///verification des champs pour coloration du boutton "valider"
-formModale.addEventListener("input", () => {
-    if (titre.value.length >= 1 && Image_upload.value != "") {
-        valide_button.style.background = "#1D6154"
-    }
+const modalFormulaireTitre = document.createElement("h3")
+modalFormulaireTitre.innerText = "Ajout photo"
+
+const form = document.createElement("form")
+
+const photoUpload = document.createElement("input")
+photoUpload.setAttribute("type", "file")
+photoUpload.setAttribute("accept", "image/jpeg")
+photoUpload.setAttribute("accept", "image/png")
+photoUpload.style.display = "none"
+
+const divPhoto = document.createElement("div")
+divPhoto.classList.add("div-photo", "clickable")
+const photoIcon = document.createElement("i")
+photoIcon.classList.add("fa-regular", "fa-image", "fa-6x")
+const photoButton = document.createElement("a")
+photoButton.innerText = "+ Ajouter photo"
+const photoInfo = document.createElement("p")
+photoInfo.innerText = "jpg, png : 4mo max"
+divPhoto.appendChild(photoIcon)
+divPhoto.appendChild(photoButton)
+divPhoto.appendChild(photoInfo)
+
+const labelTitre = document.createElement("label")
+labelTitre.setAttribute("for", "titre")
+labelTitre.innerText = "Titre"
+const titre2 = document.createElement("input")
+titre2.setAttribute("name", "titre")
+titre2.setAttribute("id", "titre")
+
+const labelCat = document.createElement("label")
+labelCat.setAttribute("for", "categorie")
+labelCat.innerText = "Catégorie"
+const cat = document.createElement("select")
+cat.setAttribute("name", "categorie")
+cat.setAttribute("id", "categorie")
+
+const optionVide = document.createElement("option")
+cat.appendChild(optionVide)
+fetch("http://localhost:5678/api/categories").then(res => {
+    return res.json()
+})
+.then(data => { const categories = data
+    categories.forEach(category => {
+        const optionCategory = document.createElement("option")
+        optionCategory.innerText = category.name
+        optionCategory.setAttribute("value", `${category.name}`)
+        optionCategory.setAttribute("data-id", `${category.id}`)
+        cat.appendChild(optionCategory)
+    })
 })
 
-// ajout projet dans l'api
-formModale.addEventListener("submit", (event) => {
-    event.preventDefault();
- 
-    const formData = new FormData();
-    formData.append("image", Image_upload.files[0]);
-    formData.append("title", titre.value);
-    formData.append("category", select.value);
- 
-    fetch(APIpathWorks, {
-      method: "POST",
-      body: formData,
-      headers: {
-        Authorization: `Bearer ${localStorage.token}`,
-      },
-    }).then((reponse) => {
-      if (reponse.ok) {
-        alert("Projet ajouté avec succès !");
-      } else {
-        alert("Le formulaire est incomplet!");
-      }
-    });
-});
+form.appendChild(divPhoto)
+form.appendChild(photoUpload)
+form.appendChild(labelTitre)
+form.appendChild(titre2)
+form.appendChild(labelCat)
+form.appendChild(cat)
 
+const divFormulaireLine = document.createElement("div")
+divFormulaireLine.classList.add("line")
+
+const boutonValider = document.createElement("a")
+boutonValider.innerText = "Valider"
+boutonValider.setAttribute("disabled", "disabled")
+boutonValider.classList.add("modal-button", "disabled")
+
+modalFormulaireBox.appendChild(modalFormulaireHeader)
+modalFormulaireBox.appendChild(modalFormulaireTitre)
+modalFormulaireBox.appendChild(form)
+modalFormulaireBox.appendChild(divFormulaireLine)
+modalFormulaireBox.appendChild(boutonValider)
+modalFormulaire.appendChild(modalFormulaireBox)
+modalBox.appendChild(modalFormulaire)
+
+
+divPhoto.addEventListener("click", () => {
+    photoUpload.click()
+})
+
+const preview = document.createElement("img")
+
+photoUpload.addEventListener("change", () => {
+    let source = ""
+    source = window.URL.createObjectURL(photoUpload.files[0])
+    preview.src = source
+    preview.classList.add("preview")
+
+    photoIcon.style.display = "none"
+    photoButton.style.display = "none"
+    photoInfo.style.display = "none"
+    divPhoto.appendChild(preview)
+})
+
+button_add.addEventListener("click", () => {
+    modalFormulaire.style.display = "block"
+    modal.style.display = "none"
+})
+//partie 3 
+
+fetch("http://localhost:5678/api/works", {
+                method: "POST",
+                headers: { "Authorization" : `Bearer ${token}` },
+                body: data,
+            })
+            .then(res => {
+                if(res.status === 201) {
+                    const divImage = document.createElement("div")
+                    divImage.classList.add("div-image")
+
+                    const img = document.createElement("img")
+                    img.src = window.URL.createObjectURL(photoUpload.files[0])
+                    
+                    const iconPoubelle = document.createElement("i")
+                    iconPoubelle.classList.add("fa-solid", "fa-trash-can", "clickable")
+
+                    divImage.appendChild(img)
+                    divGalleryMod.appendChild(divImage)
+                    divImage.appendChild(iconPoubelle)
+
+                    const figure = document.createElement("figure")
+                    const imgGallery = document.createElement("img")
+                    imgGallery.src = window.URL.createObjectURL(photoUpload.files[0])
+                    const caption = document.createElement("figcaption")
+                    caption.innerText = titre.value
+
+                    figure.appendChild(imgGallery)
+                    figure.appendChild(caption)
+
+                    divGallery.appendChild(figure)
+
+                    modalFormulaire.style.display = "none"
+                    modalBox.style.display = "block"
+                }
+            })
