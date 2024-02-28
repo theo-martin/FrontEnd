@@ -279,6 +279,8 @@ photoUpload.addEventListener("change", () => {
     photoButton.style.display = "none"
     photoInfo.style.display = "none"
     divPhoto.appendChild(preview)
+    boutonValider.removeAttribute("disabled", "disabled")
+    boutonValider.classList.replace("disabled","eneable")
 })
 
 button_add.addEventListener("click", () => {
@@ -289,10 +291,10 @@ button_add.addEventListener("click", () => {
 
 fetch("http://localhost:5678/api/works", {
                 method: "POST",
-                headers: { "Authorization" : `Bearer ${token}` },
+                headers: {"Authorization":`Bearer ${token}`},
                 body: data,
             })
-            .then(res => {
+            .then(res => {Montréal, Québec, Canada
                 if(res.status === 201) {
                     const divImage = document.createElement("div")
                     divImage.classList.add("div-image")
