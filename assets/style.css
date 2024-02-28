@@ -341,13 +341,16 @@ section#login {
 }
 
 .modal {
-  align-items: center;
+  height: 670px;
+  width: 630px;
+  padding: 0px;
+  border-radius: 10px;
+  border-color: white;
   gap: 50px;
-
-  padding: 0 105px 100px 105px;
-
   display: flex;
-  flex-direction: column-reverse;
+  justify-content: center;
+  /* flex-direction: column-reverse;
+  align-items: center; */
 }
 .modal_closing_icon {
 }
@@ -363,3 +366,97 @@ section#login {
   color: white;
   background-color: black;
 }
+.div-photo {
+  width: 420px;
+  height: 169px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: #e8f1f6;
+  margin-bottom: 30px;
+}
+.modal-header {
+  padding: 26px 30px 13px 30px;
+  height: 14px;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+}
+i.fa-solid.fa-xmark.fa-xl {
+  display: flex;
+  font-size: 24px;
+  align-items: center;
+}
+
+i.fa-solid.fa-arrow-left.fa-xl {
+  display: flex;
+  font-size: 21px;
+  align-items: center;
+}
+.div-photo a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  border-radius: 50px;
+  height: 36px;
+  width: 173px;
+  color: #306685;
+  background-color: #cbd6dc;
+}
+.div-photo i {
+  margin: 22.5px 0 12.88px;
+  display: flex;
+  font-size: 76px;
+  color: #b9c5cc;
+}
+.div-photo p {
+  margin: 7px 0 19px 0;
+  height: 12px;
+  font-size: 10px;
+}
+dialog form {
+  padding: 0px 105px;
+  display: flex;
+  flex-direction: column;
+  margin: 36px 0 79px 0;
+}
+dialog form label {
+  display: flex;
+  height: 16px;
+  font-size: 14px;
+  align-items: center;
+}
+dialog form input {
+  height: 51px;
+  margin: 10px 0 21px 0;
+}
+dialog form select {
+  height: 51px;
+  margin-top: 10px;
+}
+
+img.preview {
+  height: 169px;
+}
+.eneable {
+  background-color: #1d6154;
+}
+.modal-button {
+  display: flex;
+  justify-content: center;
+  margin-left: 195px;
+  font-size: 14px;
+  height: 36px;
+  align-items: center;
+  width: 237px;
+  color: white;
+  border-radius: 60px;
+}
+.disabled {
+  background-color: #a7a7a7;
+}
+/* .modalformulaire {
+  flex-direction: unset;
+  align-items: unset;
+} */
