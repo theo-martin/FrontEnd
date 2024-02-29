@@ -1,7 +1,7 @@
 const body = document.querySelector("body");
 const header = document.querySelector("header");
+const divGallery = document.querySelector("gallery")
 const portfolioTITLE = document.querySelector("#portfolio h2");
-
 const APIpathWorks = "http://localhost:5678/api/works"
 
  
@@ -260,7 +260,6 @@ modalFormulaireBox.appendChild(boutonValider)
 modalFormulaire.appendChild(modalFormulaireBox)
 modalBox.appendChild(modalFormulaire)
 
-
 divPhoto.addEventListener("click", () => {
     photoUpload.click()
 })
@@ -277,25 +276,32 @@ photoUpload.addEventListener("change", () => {
     photoButton.style.display = "none"
     photoInfo.style.display = "none"
     divPhoto.appendChild(preview)
-    boutonValider.removeAttribute("disabled", "disabled")
-    boutonValider.classList.replace("disabled","eneable")
-    
+
 })
 
 button_add.addEventListener("click", () => {
     modalFormulaire.style.display = "block"
     modal.style.display = "none"
+   
 })
 //partie 3 
-boutonValider.addEventListener("click", () => { 
+form.addEventListener("change", () => { 
+    const photoValue = window.URL.createObjectURL(photoUpload.files[0])
+    const titreValue = titre.value
+    const catValue = cat.value
+     if(photoValue !== "" && titreValue !== "" && catValue !== "") { 
+    boutonValider.removeAttribute("disabled", "disabled")
+    boutonValider.classList.replace("disabled","eneable") }
+ })
+ function addNewWork(event) {
+  
     const token = localStorage.getItem("token")
     let data = new FormData()
     data.append("image", photoUpload.files[0])
     data.append("title", titre.value)
     data.append("category", parseInt(cat.selectedOptions[0].getAttribute("data-id")))
-    console.log(data)
- })
-fetch("http://localhost:5678/api/works", {
+  
+    fetch("http://localhost:5678/api/works", {
                 method: "POST",
                 headers: {"Authorization":`Bearer ${token}`},
                 body: data,
@@ -325,8 +331,13 @@ fetch("http://localhost:5678/api/works", {
                     figure.appendChild(caption)
 
                     divGallery.appendChild(figure)
-
+                    alert('Le nouvel travail a été ajouté avec succès.');
                     modalFormulaire.style.display = "none"
                     modalBox.style.display = "block"
                 }
             })
+ }
+boutonValider.addEventListener("click", () => { 
+    addNewWork()
+    console.log(data)
+ })

@@ -406,11 +406,8 @@ section#login {
   gap: 50px;
   display: flex;
   justify-content: center;
-  /* flex-direction: column-reverse;
-  align-items: center; */
 }
-.modal_closing_icon {
-}
+
 .modaldelete {
   display: none;
 }
