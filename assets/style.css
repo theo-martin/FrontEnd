@@ -450,7 +450,7 @@ section#login {
   flex-direction: row-reverse;
   justify-content: space-between;
 }
-i.fa-solid.fa-xmark.fa-xl {
+i.fa-solid.fa-xmark {
   display: flex;
   font-size: 24px;
   align-items: center;
@@ -496,10 +496,14 @@ dialog form label {
   align-items: center;
 }
 dialog form input {
+  border: none;
+  filter: drop-shadow(-11px 14px 9px #cfcfcf);
   height: 51px;
   margin: 10px 0 21px 0;
 }
 dialog form select {
+  border: none;
+  filter: drop-shadow(-11px 14px 9px #cfcfcf);
   height: 51px;
   margin-top: 10px;
 }
