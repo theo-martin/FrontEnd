@@ -1,24 +1,7 @@
 const body = document.querySelector("body");
 const header = document.querySelector("header");
 const portfolioTITLE = document.querySelector("#portfolio h2");
-// const modalBox = document.querySelector("dialog");
-// const modalContent = document.querySelector(".modal_content");
-// const closetrig1 = document.querySelector(".modal .modaldelete .modal_closing_icon");
-// const closetrig2 = document.querySelector(".modal .modaladding .icons .modal_closing_icon");
-// const addButton = document.querySelector(".modal .modaldelete .add-photo");
-const modalDelete = document.getElementById("modaldelete");
-const modalAdding = document.getElementById("modaladding");
-const previous_icon = document.querySelector(".previous_icon");
-const Image_preview = document.querySelector(".image_preview");
-const boxImage_preview = document.getElementById("image");
-const Image_upload =document.getElementById("image_upload");
-const LabelUpload = document.querySelector(".uploadcontainer label");
-const fa_image = document.getElementById("fa-image");
-const text_format =document.getElementById("text_format");
-const titre = document.getElementById("Titleinput");
-const select = document.getElementById("category_input");
-const formModale = document.querySelector(".formModale");
-const valide_button = document.getElementById("modal_form_validation");
+
 const APIpathWorks = "http://localhost:5678/api/works"
 
  
@@ -36,35 +19,42 @@ const createBannner = () => {
 
 const createEditingButton = (id) => {
     editingButton = document.createElement("button");
-    editingButton.classList.add("edit_button");
+    editingButton.classList.add("edit_button","clickable");
     editingButton.setAttribute("id", id);
     editingButton.innerHTML = `<i class="fa-regular fa-pen-to-square"></i>
     <p>modifier</p>`;
 };
+//création modal galerie photo
 const modalBox = document.createElement("dialog");
 const modal = document.createElement("div");
-modal.classList.add("modal");
+modal.classList.add("modal-1");
 const button_add = document.createElement("button");
-button_add.classList.add("btn_add")
+button_add.classList.add("btn_add","clickable")
 button_add.innerHTML = `<p>ajouter une photo</p>`
+const line = document.createElement("hr");
+line.classList.add("line")
 const modalContent = document.createElement("div");
 modalContent.classList.add("modal_content")  
-modalContent.setAttribute("style", "display: grid;grid-template-columns: repeat(5, 1fr);grid-auto-flow: row;column-gap: 6px;row-gap: 12px;")
+modalContent.setAttribute("style", "display: grid;grid-template-columns: repeat(5, 1fr);grid-auto-flow: row;column-gap: 6px;row-gap: 29px;    grid-template-rows: repeat(3, 1fr);")
 modalBox.classList.add("modaladding_active","modal","modaldelete");
 const headerModal = document.createElement("header");
+headerModal.classList.add("header_modal")
 const h1Modal = document.createElement("h1");
 h1Modal.innerHTML= "Galerie photo";
 
 portfolioTITLE.appendChild(modalBox);
 modalBox.appendChild(modal);
 modal.appendChild(button_add);
+modal.appendChild(line);
+
 modal.appendChild(modalContent);
 modal.appendChild(headerModal);
 headerModal.appendChild(h1Modal);
 headerModal.appendChild(h1Modal);
 
 const close_icon = document.createElement("div");
-close_icon.innerHTML = `<i class="fa-solid fa-xmark"></i>`
+close_icon.classList.add("xmark")
+close_icon.innerHTML = `<i class="fa-solid fa-xmark clickable"></i>`
 modal.appendChild(close_icon);
  
 
@@ -141,8 +131,8 @@ function addingProjets() {
             Card.className = "Card";
             
             image.src = element.imageUrl;
-            image.setAttribute("style","width: 150px;height: 150px;")
-            description.innerHTML = `<button <i class="fa-regular fa-trash-can"></i></button`;
+
+            description.innerHTML = `<button <i class="fa-regular clickable fa-trash-can trash-can"></i></button`;
             description.setAttribute("id", "deleteBtn");
 
             // Suprimer un projet ciblé
@@ -171,7 +161,7 @@ function addingProjets() {
 }
 
 
-// partie 2
+// deuxieme partie formulaire 
 const modalFormulaire = document.createElement("div")
 modalFormulaire.classList.add("modalformulaire")
 
@@ -181,11 +171,19 @@ modalFormulaireBox.classList.add("modal-box")
 const modalFormulaireHeader = document.createElement("div")
 modalFormulaireHeader.classList.add("modal-header")
 const crossFormulaire = document.createElement("i")
+
 crossFormulaire.classList.add("fa-solid", "fa-xmark", "fa-xl", "clickable")
 const retour = document.createElement("i")
 retour.classList.add("fa-solid", "fa-arrow-left", "fa-xl", "clickable")
 modalFormulaireHeader.appendChild(crossFormulaire)
 modalFormulaireHeader.appendChild(retour)
+
+
+crossFormulaire.addEventListener("click", ModalClose )
+retour.addEventListener("click", () => {
+    modalFormulaire.style.display = "none"
+    modal.style.display = "flex"
+})
 
 const modalFormulaireTitre = document.createElement("h3")
 modalFormulaireTitre.innerText = "Ajout photo"
@@ -213,9 +211,9 @@ divPhoto.appendChild(photoInfo)
 const labelTitre = document.createElement("label")
 labelTitre.setAttribute("for", "titre")
 labelTitre.innerText = "Titre"
-const titre2 = document.createElement("input")
-titre2.setAttribute("name", "titre")
-titre2.setAttribute("id", "titre")
+const titre = document.createElement("input")
+titre.setAttribute("name", "titre")
+titre.setAttribute("id", "titre")
 
 const labelCat = document.createElement("label")
 labelCat.setAttribute("for", "categorie")
@@ -242,11 +240,11 @@ fetch("http://localhost:5678/api/categories").then(res => {
 form.appendChild(divPhoto)
 form.appendChild(photoUpload)
 form.appendChild(labelTitre)
-form.appendChild(titre2)
+form.appendChild(titre)
 form.appendChild(labelCat)
 form.appendChild(cat)
 
-const divFormulaireLine = document.createElement("div")
+const divFormulaireLine = document.createElement("hr")
 divFormulaireLine.classList.add("line")
 
 const boutonValider = document.createElement("a")
@@ -281,6 +279,7 @@ photoUpload.addEventListener("change", () => {
     divPhoto.appendChild(preview)
     boutonValider.removeAttribute("disabled", "disabled")
     boutonValider.classList.replace("disabled","eneable")
+    
 })
 
 button_add.addEventListener("click", () => {
@@ -288,13 +287,20 @@ button_add.addEventListener("click", () => {
     modal.style.display = "none"
 })
 //partie 3 
-
+boutonValider.addEventListener("click", () => { 
+    const token = localStorage.getItem("token")
+    let data = new FormData()
+    data.append("image", photoUpload.files[0])
+    data.append("title", titre.value)
+    data.append("category", parseInt(cat.selectedOptions[0].getAttribute("data-id")))
+    console.log(data)
+ })
 fetch("http://localhost:5678/api/works", {
                 method: "POST",
                 headers: {"Authorization":`Bearer ${token}`},
                 body: data,
             })
-            .then(res => {Montréal, Québec, Canada
+            .then(res => {
                 if(res.status === 201) {
                     const divImage = document.createElement("div")
                     divImage.classList.add("div-image")
