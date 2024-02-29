@@ -216,8 +216,12 @@ li:hover {
   margin-bottom: 0.5em;
 }
 #portfolio h2 {
+  gap: 31px;
+  display: flex;
   text-align: center;
   margin-bottom: 1em;
+  align-items: center;
+  justify-content: center;
 }
 .gallery {
   width: 100%;
@@ -339,7 +343,60 @@ section#login {
   font-weight: bold;
   color: black;
 }
+.edit_button {
+  background-color: white;
+  display: flex;
+  gap: 2.42px;
+  font-size: 14px;
+  border: white;
+  width: 84px;
+  height: 18px;
+}
+.modal-1 {
+  display: flex;
 
+  align-items: center;
+  flex-direction: column-reverse;
+}
+.xmark {
+  margin: 26px 30px 10px 576px;
+}
+.header_modal {
+  margin: 0;
+}
+.header_modal h1 {
+  color: black;
+  font-weight: inherit;
+  font-size: 26px;
+  height: 30px;
+  font-weight: normal;
+  margin-bottom: 36px;
+}
+.Card img {
+  height: 102.57px;
+  width: 76.61px;
+}
+.Card {
+  display: flex;
+  justify-content: flex-end;
+}
+#deleteBtn {
+  position: absolute;
+  margin: 6px 5.34px 0 0;
+  height: 17px;
+  width: 17px;
+}
+.trash-can {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 17px;
+  width: 17px;
+  font-size: 10px;
+  background-color: black;
+  color: white;
+  border-radius: 2px;
+}
 .modal {
   height: 670px;
   width: 630px;
@@ -358,13 +415,27 @@ section#login {
   display: none;
 }
 .btn_add {
-  justify-content: space-around;
-  align-items: center;
-  height: 30px;
-  width: 150px;
   display: flex;
+  justify-content: center;
+  font-size: 14px;
+  height: 36px;
+  align-items: center;
+  width: 237px;
   color: white;
-  background-color: black;
+  border-radius: 60px;
+  border: none;
+  background-color: #1d6154;
+  margin-bottom: 45px;
+}
+.line {
+  color: #b3b3b3;
+  width: 420px;
+  size: 1px;
+  margin: 41.3px 0 38px 0;
+  margin: 41.3px 103px 38px 103px;
+}
+.clickable {
+  cursor: pointer;
 }
 .div-photo {
   width: 420px;
@@ -419,7 +490,7 @@ dialog form {
   padding: 0px 105px;
   display: flex;
   flex-direction: column;
-  margin: 36px 0 79px 0;
+  margin-top: 36px;
 }
 dialog form label {
   display: flex;
