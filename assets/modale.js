@@ -308,18 +308,22 @@ form.addEventListener("change", () => {
             })
             .then(res => {
                 if(res.status === 201) {
-                    const divImage = document.createElement("div")
-                    divImage.classList.add("div-image")
-
-                    const img = document.createElement("img")
-                    img.src = window.URL.createObjectURL(photoUpload.files[0])
+                    const Card = document.createElement("figure");
+                    const image = document.createElement("img");
+                    const description = document.createElement("figcaption");  
+        
+                    Card.className = "Card";
                     
-                    const iconPoubelle = document.createElement("i")
-                    iconPoubelle.classList.add("fa-solid", "fa-trash-can", "clickable")
+                    image.src = window.URL.createObjectURL(photoUpload.files[0]);
+        
+                    description.innerHTML = `<button <i class="fa-regular clickable fa-trash-can trash-can"></i></button`;
+                    description.setAttribute("id", "deleteBtn");
 
-                    divImage.appendChild(img)
-                    divGalleryMod.appendChild(divImage)
-                    divImage.appendChild(iconPoubelle)
+                    modalBox.appendChild(Card);
+                    modalContent.appendChild(Card);
+                    Card.appendChild(image);
+                    Card.appendChild(description);
+                    
 
                     const figure = document.createElement("figure")
                     const imgGallery = document.createElement("img")
@@ -332,12 +336,14 @@ form.addEventListener("change", () => {
 
                     divGallery.appendChild(figure)
                     alert('Le nouvel travail a été ajouté avec succès.');
-                    modalFormulaire.style.display = "none"
-                    modalBox.style.display = "block"
+                    console.log(data)
+                    console.log(alert)
                 }
             })
  }
 boutonValider.addEventListener("click", () => { 
-    addNewWork()
-    console.log(data)
+    addNewWork() 
+    modalFormulaire.style.display = "none"
+    modal.style.display = "flex"
+   
  })
