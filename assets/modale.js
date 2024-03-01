@@ -1,6 +1,6 @@
 const body = document.querySelector("body");
 const header = document.querySelector("header");
-const divGallery = document.querySelector("gallery")
+ divGallery = document.querySelector("gallery")
 const portfolioTITLE = document.querySelector("#portfolio h2");
 const APIpathWorks = "http://localhost:5678/api/works"
 
