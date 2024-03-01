@@ -20,6 +20,9 @@ fetchWorks().then(list => {
         imageElement.src = work.imageUrl;
         const captionElement = document.createElement("figcaption");
         captionElement.innerText = work.title;
+
+        workElement.setAttribute("data-id", `${work.categoryId}`)
+        workElement.setAttribute("data-projetid", `${work.id}`)      
         // 
         workElement.appendChild(imageElement);
         workElement.appendChild(captionElement);

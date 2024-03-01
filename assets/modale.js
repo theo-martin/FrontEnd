@@ -1,6 +1,6 @@
 const body = document.querySelector("body");
 const header = document.querySelector("header");
- divGallery = document.querySelector("gallery")
+divGallery = document.querySelector("gallery")
 const portfolioTITLE = document.querySelector("#portfolio h2");
 const APIpathWorks = "http://localhost:5678/api/works"
 
@@ -77,7 +77,7 @@ window.addEventListener("unload", removeToken);
 
 function openModal() {
     modalBox.classList.remove("modaldelete")
-    // createModale();
+
     addingProjets();
     modalBox.showModal();
 };
@@ -132,7 +132,7 @@ function addingProjets() {
             
             image.src = element.imageUrl;
 
-            description.innerHTML = `<button <i class="fa-regular clickable fa-trash-can trash-can"></i></button`;
+            description.innerHTML = `<button <i class="fa-regular clickable fa-trash-can trash-can"></i></button>`;
             description.setAttribute("id", "deleteBtn");
 
             // Suprimer un projet ciblé
@@ -147,7 +147,9 @@ function addingProjets() {
                   .then(response => {
                     if (response.ok) {
                       Card.remove();
-                      alert("Projet supprimé avec succès !");
+                      fetchWorks()
+                      alert("Projet supprimé avec succès !");   
+                      return response.json();    
                     }
                 });
             });
@@ -269,6 +271,7 @@ const preview = document.createElement("img")
 photoUpload.addEventListener("change", () => {
     let source = ""
     source = window.URL.createObjectURL(photoUpload.files[0])
+    preview.style.display ="flex"
     preview.src = source
     preview.classList.add("preview")
 
@@ -293,6 +296,7 @@ form.addEventListener("change", () => {
     boutonValider.removeAttribute("disabled", "disabled")
     boutonValider.classList.replace("disabled","eneable") }
  })
+
  function addNewWork(event) {
   
     const token = localStorage.getItem("token")
@@ -343,7 +347,19 @@ form.addEventListener("change", () => {
  }
 boutonValider.addEventListener("click", () => { 
     addNewWork() 
+    const photoValue = window.URL.createObjectURL(photoUpload.files[0])
+    const titreValue = titre.value
+    const catValue = cat.value
+    if (photoValue == "" || titreValue == "" || catValue == ""){
+        alert('veuiller recommencer en remplissant tout les champs ');
+    }    
+    titre.value = ""
+    cat.value = ""
+    preview.style.display ="none"
+    photoIcon.style.display = "flex"
+    photoButton.style.display = "flex"
+    photoInfo.style.display = "flex"
     modalFormulaire.style.display = "none"
     modal.style.display = "flex"
-   
+
  })
