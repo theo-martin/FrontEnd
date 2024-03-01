@@ -226,13 +226,16 @@ li:hover {
 .gallery {
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-column-gap: 20px;
-  grid-row-gap: 20px;
+  grid-template-columns: 0fr 0fr 0fr;
+  grid-column-gap: 18px;
+  grid-row-gap: 38px;
+  justify-content: center;
 }
 
 .gallery img {
-  width: 100%;
+  object-fit: cover;
+  height: 407px;
+  width: 305px;
 }
 #contact {
   width: 50%;
@@ -301,7 +304,10 @@ footer nav ul {
   background-color: #1d6154;
   color: white;
 }
-
+.gallery figure {
+  height: 407px;
+  width: 305px;
+}
 /* partie login */
 section#login {
   margin: 150px 0 0 0;
@@ -532,3 +538,7 @@ img.preview {
   flex-direction: unset;
   align-items: unset;
 } */
+::backdrop {
+  background-color: black;
+  opacity: 70%;
+}
