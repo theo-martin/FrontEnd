@@ -136,20 +136,50 @@ function addingProjets() {
             description.setAttribute("id", "deleteBtn");
 
             // Suprimer un projet ciblé
-
+            async function displayWorks() {
+                const list = await fetchWorks();
+                const sectionGallery = document.querySelector(".gallery");
+                // Nettoyer la galerie avant d'ajouter de nouveaux projets
+                sectionGallery.innerHTML = ""; // Vide la galerie
+            
+                for (let i = 0; i < list.length; i++) {
+                    const work = list[i];
+                    // Créer les éléments
+                    const workElement = document.createElement("figure");
+                    workElement.dataset.category = work.category.name;
+                    workElement.dataset.id = work.id;
+                    const imageElement = document.createElement("img");
+                    imageElement.src = work.imageUrl;
+                    const captionElement = document.createElement("figcaption");
+                    captionElement.innerText = work.title;
+            
+                    workElement.setAttribute("data-id", `${work.categoryId}`);
+                    workElement.setAttribute("data-projetid", `${work.id}`);
+                    
+                    // Ajouter les éléments à la galerie
+                    workElement.appendChild(imageElement);
+                    workElement.appendChild(captionElement);
+                    sectionGallery.appendChild(workElement);
+                }
+            }
+            
+            // Appel initial pour afficher les projets
+            displayWorks();
+            
+            // Partie suppression de projet
             description.addEventListener('click', (e) => {
                 fetch(`http://localhost:5678/api/works/${element.id}`, {
-                  method: 'DELETE',
-                  headers: {
-                    Authorization: `Bearer ${localStorage.token}`,
-                  },
+                    method: 'DELETE',
+                    headers: {
+                        Authorization: `Bearer ${localStorage.token}`,
+                    },
                 })
-                  .then(response => {
+                .then(response => {
                     if (response.ok) {
-                      Card.remove();
-                      fetchWorks()
-                      alert("Projet supprimé avec succès !");   
-                      return response.json();    
+                        Card.remove();
+                        alert("Projet supprimé avec succès !");
+                        // Actualiser la galerie après la suppression
+                        displayWorks();
                     }
                 });
             });
@@ -333,15 +363,32 @@ form.addEventListener("change", () => {
                     const imgGallery = document.createElement("img")
                     imgGallery.src = window.URL.createObjectURL(photoUpload.files[0])
                     const caption = document.createElement("figcaption")
-                    caption.innerText = titre.value
+                    
+
 
                     figure.appendChild(imgGallery)
                     figure.appendChild(caption)
-
+                    caption.innerText = titre.value
                     divGallery.appendChild(figure)
+
+                    fetchWorks().then(list => {
+                        const sectionGallery = document.querySelector(".gallery");
+                        for (let i=0; i < list.length; i++) {
+                            const work = list[i];
+                            figure.dataset.category = work.category.name; //ajoute la categorie 
+                            figure.dataset.id = work.id; //ajoute l'id correspondant 
+                            caption.innerText = work.title;
+                    
+                            figure.setAttribute("data-id", `${work.categoryId}`)
+                            figure.setAttribute("data-projetid", `${work.id}`)      
+                            // 
+                            figure.appendChild(caption);
+                            sectionGallery.appendChild(figure);
+                        }})  
                     alert('Le nouvel travail a été ajouté avec succès.');
                     console.log(data)
                     console.log(alert)
+                    
                 }
             })
  }
@@ -350,6 +397,7 @@ boutonValider.addEventListener("click", () => {
     const photoValue = window.URL.createObjectURL(photoUpload.files[0])
     const titreValue = titre.value
     const catValue = cat.value
+    console.log(titre.value)
     if (photoValue == "" || titreValue == "" || catValue == ""){
         alert('veuiller recommencer en remplissant tout les champs ');
     }    
